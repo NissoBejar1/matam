@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define POWER 2
+#define NOT_EXPONENT -1
+
+int find_exponent (int num);
+
+int main() {
+    int size_of_input,exponent,exponent_sum=0;
+    printf("Enter size of input:\n");
+    if (scanf("%d",&size_of_input)!=1)
+    {
+        printf("Invalid number");
+        return 0;
+    }
+    int *numbers_arr =  malloc(size_of_input*sizeof(int));
+    if (size_of_input<0)
+    {
+        printf("Invalid size");
+        return 0;
+    }
+    printf("Enter numbers: ");
+    for (int i=0;i<size_of_input;i++)
+    {
+        if(scanf("%d",&numbers_arr[i])!=1)
+        {
+            printf("Invalid number");
+            return 0;
+        }
+
+    }
+    for (int i=0; i<size_of_input;i++){
+        exponent = find_exponent(numbers_arr[i]);
+        if (exponent!=NOT_EXPONENT)
+        {
+            printf("The number %d is a power of 2: %d=2^%d\n",numbers_arr[i],numbers_arr[i],exponent);
+            exponent_sum+=exponent;
+        }
+    }
+    printf("Total exponent sum is %d",exponent_sum);
+    free (numbers_arr);
+    return 0;
+}
+
+int find_exponent (int num){
+    int exponent =NOT_EXPONENT;
+    while (num>=1){
+        exponent++;
+        if (num%POWER!=0&&num!=1)
+            return NOT_EXPONENT;
+        num=num/POWER;
+    }
+    return exponent;
+}
